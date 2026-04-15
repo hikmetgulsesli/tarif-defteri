@@ -1,0 +1,487 @@
+# PRD: Lezzet Defteri — Yemek Tarifi Defteri Uygulaması
+
+## 1. Genel Bakış
+
+**Proje Adı:** Lezzet Defteri
+**Proje Slug:** tarif-defteri-6881400
+**Platform:** Web (SPA — Single Page Application)
+**Tech Stack:** React 18 + Vite + Tailwind CSS
+**Dil:** Türkçe (tüm UI içeriği, kullanıcı metinleri, hata mesajları)
+**Veritabanı:** Yok (tarayıcıda localStorage ile çalışır)
+
+Lezzet Defteri, kullanıcıların yemek tariflerini kaydedebildiği, organize edebildiği ve favorilerine ekleyebildiği kişisel bir tarif defteri uygulamasıdır. Kullanıcılar yeni tarif ekleyebilir, malzeme listesi ve yapılış adımlarını kaydedebilir, kategorilere göre filtreleyebilir ve en sevdiği tarifleri favorilere alabilir.
+
+**Hedef Kitle:** Ev aşçıları, yemek meraklıları, ailelerinin geleneksel tariflerini korumak isteyenler.
+
+---
+
+## 2. Hedefler
+
+- Kullanıcıların tariflerini kolayca kaydetmesi ve geri bulması
+- Kategorilere göre düzenli filtreleme yapabilme
+- Malzeme listesi ve adım adım yapılış talimatları ile detaylı tarif profilleri
+- Favori tariflerin hızlı erişilebilirliği
+- Mobil uyumlu, dokunmatik dostu arayüz
+- Hızlı yükleme ve akıcı sayfa geçişleri (<100ms)
+- Tarayıcıda çalışan, kurulum gerektirmeyen uygulama
+- Erişilebilir tasarım (WCAG 2.1 AA uyumlu)
+
+---
+
+## 3. Tech Stack Detayı
+
+### 3.1 Framework ve Build
+- **Framework:** React 18.x (hooks tabanlı, class component yok)
+- **Build Tool:** Vite 5.x (hızlı HMR, optimize build)
+- **Dil:** JavaScript (JSX) — TypeScript gereksinimi yok
+
+### 3.2 Styling
+- **Styling:** Tailwind CSS 3.x
+- **Yaklaşım:** Utility-first CSS, responsive breakpoint'ler (sm/md/lg/xl)
+- **İkon:** Lucide React (emoji yerine SVG ikonlar)
+
+### 3.3 State Management
+- **Local State:** React useState, useReducer (hooks)
+- **Cross-component:** Context API (TarifContext, FavoritesContext)
+- **Kalıcı Depolama:** localStorage API (tarifler ve favoriler için)
+
+### 3.4 Routing
+- **Kütüphane:** React Router DOM v6
+- **Yapı:** BrowserRouter, nested routes
+- **URL Design:** /tarifler, /tarif/ekle, /tarif/:id, /favoriler
+
+### 3.5 Veri Saklama
+- **Yöntem:** localStorage (tarayıcı içi)
+- **Veri Tipi:** JSON string olarak saklanır
+- **Schema:** Recipes array, her biri Recipe entity
+
+---
+
+## 4. Fonksiyonel Gereksinimler
+
+### 4.1 Tarif Listeleme (Ana Sayfa)
+- Tüm tarifler kartlı liste olarak gösterilir
+- Her kartta: Tarif adı, kategori, küçük resim/thumbnail, favori durumu
+- Kategori filtrelemesi (Navbar'da kategori dropdown)
+- Arama kutusu ile ada göre arama (anlık, 2+ karakter sonrası)
+- Boş durum: "Henüz tarif eklenmedi. İlk tarifinizi ekleyin!" mesajı
+- Sıralama: Varsayılan (en yeni önce)
+
+### 4.2 Yeni Tarif Ekleme
+- Form alanları:
+  - **Tarif Adı** (zorunlu, max 100 karakter)
+  - **Kategori** (zorunlu, dropdown: Kahvaltılık, Öğle Yemeği, Akşam Yemeği, Tatlı, İçecek, Atıştırmalık, Çorba, Salata, Diğer)
+  - **Malzeme Listesi** (dinamik ekle/sil, her biri malzeme adı + miktar)
+  - **Yapılış Adımları** (dinamik ekle/sil, numbered list, her adım textarea)
+  - **Notlar** (opsiyonel, textarea)
+- Görsel yükleme: Base64 encoded image, max 2MB, JPG/PNG/WEBP
+- Kaydet butonu: "Tarifi Kaydet"
+- İptal: "İptal" butonu, onay gerektirmez
+- Hata: "Lütfen tüm zorunlu alanları doldurun" (kırmızı, form üstünde)
+- Başarı: Tarifler sayfasına yönlendir, toast: "Tarif başarıyla kaydedildi"
+
+### 4.3 Tarif Detay Sayfası
+- Üst kısım: Görsel (varsa), başlık, kategori badge
+- Orta kısım: Malzeme listesi (checkbox ile işaretlenebilir)
+- Alt kısım: Adım adım yapılış talimatları (numaralı liste)
+- Notlar bölümü (varsa)
+- Favori butonu: Kalp ikonu, dolu/boş durum
+- Düzenle butonu: Detay sayfasından düzenleme formuna git
+- Sil butonu: Onay dialogu sonrası silme, "Bu tarifi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+- Geri butonu: Tariflere dön
+
+### 4.4 Favoriler Sayfası
+- Sadece favori olarak işaretlenen tarifler listelenir
+- Aynı kart formatı (Tarif Listeleme ile)
+- Boş durum: "Henüz favori tarifiniz yok. Sevdiğiniz tarifleri kalp ile işaretleyin!"
+- Favori kaldırma: Kalp ikonuna tıklama ile kaldırılabilir
+
+### 4.5 Arama ve Filtreleme
+- Arama kutusu: Ana sayfada navbar'da
+- Filtreleme: Kategori dropdown, "Tümü" seçeneği dahil
+- Sonuç yok: "Arama kriterlerine uygun tarif bulunamadı"
+
+---
+
+## 5. Veri Modeli
+
+### 5.1 Recipe Entity
+
+```typescript
+interface Recipe {
+  id: string;                    // UUID, crypto.randomUUID()
+  name: string;                  // Tarif adı
+  category: CategoryEnum;        // Kategori
+  image: string | null;          // Base64 string veya null
+  ingredients: Ingredient[];     // Malzeme dizisi
+  steps: string[];               // Yapılış adımları dizisi
+  notes: string | null;          // Notlar (opsiyonel)
+  isFavorite: boolean;           // Favori mi
+  createdAt: string;             // ISO 8601 timestamp
+  updatedAt: string;             // ISO 8601 timestamp
+}
+
+interface Ingredient {
+  id: string;                    // UUID
+  name: string;                  // Malzeme adı
+  amount: string;                // Miktar (örn: "2 su bardağı", "500 gram")
+}
+```
+
+### 5.2 Categories Enum
+
+```typescript
+type Category = 
+  | 'kahvaltilik' 
+  | 'ogle-yemegi' 
+  | 'aksam-yemegi' 
+  | 'tatli' 
+  | 'icecek' 
+  | 'atistirmalik' 
+  | 'corba' 
+  | 'salata' 
+  | 'diger';
+```
+
+### 5.3 localStorage Schema
+
+```
+Key: 'lezzet-defteri-recipes'
+Value: Recipe[] (JSON string)
+```
+
+---
+
+## 6. UI/UX Gereksinimleri
+
+### 6.1 Design System — Aesthetic: Playful & Warm
+
+Lezzet Defteri, sıcak ve davetkar bir mutfak atmosferi yaratır. Krem ve turuncu tonları, yemek ile ilişkilendirilen sıcaklığı çağrıştırır.
+
+#### Renk Paleti
+
+| Rol | Hex Kodu | Kullanım |
+|-----|----------|----------|
+| Primary | #E07A2F | Ana butonlar, vurgular, aktif seçimler |
+| Primary Dark | #C4611F | Hover durumu, pressed |
+| Secondary | #F4E4C9 | Kart arka planları, secondary alanlar |
+| Accent | #D4524A | Favori kalp ikonu (doluyken), silme butonları |
+| Background | #FDFBF7 | Sayfa arka planı (krem) |
+| Surface | #FFFFFF | Kart, modal, form arka planları |
+| Text Primary | #2D2A26 | Ana metin, başlıklar |
+| Text Secondary | #6B6560 | İkincil metin, placeholder, açıklama |
+| Border | #E8E2D9 | Kart kenarlıkları, input çerçeveleri |
+| Success | #4CAF50 | Başarı mesajları, doğru onay |
+| Error | #D4524A | Hata mesajları, silme onayları |
+| Warning | #FFA726 | Uyarı mesajları |
+
+#### Tipografi
+
+- **Başlık Fontu:** 'Playfair Display', Georgia, serif (tarif adları, başlıklar)
+- **Gövde Fontu:** 'Inter', system-ui, sans-serif (formlar, açıklamalar, butonlar)
+- **Font Boyutları:**
+  - H1 (Sayfa başlığı): 28px, font-weight: 700
+  - H2 (Bölüm başlığı): 22px, font-weight: 600
+  - H3 (Kart başlığı): 18px, font-weight: 600
+  - Body: 16px, font-weight: 400
+  - Small/Caption: 14px, font-weight: 400
+  - Tiny: 12px, font-weight: 400
+
+#### İkon Kütüphanesi
+
+**Lucide React** kullanılır. Emoji kesinlikle YASAKTIR.
+
+Kullanılan ikonlar:
+- `ChefHat` — Uygulama logosu, navbar
+- `Search` — Arama kutusu
+- `Filter` — Filtre dropdown
+- `Plus` — Yeni ekle butonu
+- `Heart` / `HeartFilled` — Favori (boş/dolu)
+- `Edit2` — Düzenle butonu
+- `Trash2` — Sil butonu
+- `ArrowLeft` — Geri butonu
+- `Check` — Onay, checkmark
+- `X` — Kapat, iptal
+- `Clock` — Yapılış süresi (varsa)
+- `Users` — Kişi sayısı (varsa)
+- `BookOpen` — Tarifler sayfası ikonu
+
+### 6.2 Spacing & Layout
+
+#### Spacing Scale (Tailwind default)
+
+| İsim | Değer | Kullanım |
+|------|-------|----------|
+| xs | 4px | İkon ile metin arası, çok sıkı gruplar |
+| sm | 8px | İç padding, kart içi elemanlar |
+| md | 16px | Kart padding, section arası |
+| lg | 24px | Sayfa kenar boşlukları, büyük sectionlar |
+| xl | 32px | Ana container padding |
+| 2xl | 48px | Boş alan, section ayırıcılar |
+
+#### Border Radius
+
+| İsim | Değer | Kullanım |
+|------|-------|----------|
+| sm | 6px | Input fields |
+| md | 8px | Küçük kartlar, butonlar |
+| lg | 12px | Büyük kartlar, modal |
+| xl | 16px | Ana container |
+| full | 9999px | Dairesel butonlar, avatar |
+
+#### Shadows
+
+| İsim | Değer | Kullanım |
+|------|-------|----------|
+| sm | 0 1px 3px rgba(0,0,0,0.08) | Kartlar, subtle |
+| md | 0 4px 6px rgba(0,0,0,0.1) | Hover kartlar |
+| lg | 0 10px 20px rgba(0,0,0,0.12) | Modal, dropdown |
+
+### 6.3 Component Patterns
+
+#### Butonlar
+
+**Primary Button:**
+- Background: Primary (#E07A2F), Text: Beyaz
+- Hover: Primary Dark (#C4611F)
+- Active: scale-95
+- Disabled: opacity-50, cursor-not-allowed
+- Border-radius: md (8px)
+- Padding: px-4 py-2 (sm), px-6 py-3 (md)
+
+**Secondary Button:**
+- Background: transparent, Border: Primary
+- Text: Primary
+- Hover: Background Secondary (#F4E4C9)
+
+**Danger Button:**
+- Background: Error (#D4524A)
+- Text: Beyaz
+- Hover: opacity-90
+
+**Icon Button:**
+- Rounded-full, p-2
+- Hover: bg-gray-100
+
+#### Kartlar (Recipe Card)
+
+- Background: Surface (white)
+- Border: 1px Border color
+- Border-radius: lg (12px)
+- Padding: md (16px)
+- Shadow: sm
+- Hover: shadow-md, translateY(-2px)
+- Image: aspect-[4/3], object-cover, rounded-t-lg
+
+#### Form Input
+
+- Border: 1px Border color
+- Border-radius: sm (6px)
+- Padding: px-3 py-2
+- Focus: ring-2 ring-Primary, outline-none
+- Error: border-Error, ring-Error
+
+#### Badge (Kategori)
+
+- Background: Secondary (#F4E4C9)
+- Text: Text Primary
+- Border-radius: full
+- Padding: px-2 py-0.5
+- Font-size: xs, font-weight: 500
+
+### 6.4 Layout & Responsive
+
+#### Breakpoints (Tailwind)
+
+- **sm:** 640px — Büyük telefonlar
+- **md:** 768px — Tabletler
+- **lg:** 1024px — Küçük dizüstü
+- **xl:** 1280px — Desktop
+
+#### Grid Sistemi
+
+- **Mobil (< md):** 1 kolon (tarif listesi), tek sütun form
+- **Tablet (md+):** 2 kolon grid (tarif listesi)
+- **Desktop (lg+):** 3 kolon grid (tarif listesi), 2 kolon form (malzeme + adımlar yan yana)
+
+#### Container
+
+- Max-width: 1280px (xl)
+- Horizontal padding: lg (24px) mobil, xl (32px) desktop
+- Centered: mx-auto
+
+---
+
+## 7. Non-Functional Requirements
+
+### 7.1 Performans
+
+- **İlk Yükleme:** < 2 saniye (Lighthouse score > 90)
+- **Bundle Size:** < 150KB gzipped (tüm JS)
+- **Sayfa Geçişi:** < 100ms (React Router, no server round-trip)
+- **localStorage Okuma:** < 50ms (küçük veri seti)
+- **Image resize:** Client-side, 800px max genişlik
+
+### 7.2 Erişilebilirlik (WCAG 2.1 AA)
+
+- **Renk Kontrastı:**
+  - Text: >= 4.5:1 (normal text)
+  - Large text (18px+): >= 3:1
+  - UI components: >= 3:1
+- **Klavye Navigasyonu:**
+  - Tab ile tüm interactive elementlere erişim
+  - Enter/Space ile aktivasyon
+  - Focus visible state (ring)
+- **Ekran Okuyucu:**
+  - ARIA labels tüm butonlarda ve form elemanlarında
+  - Semantic HTML (nav, main, section, article)
+  - Form error'ları aria-describedby ile bağlı
+- **Touch Hedefleri:**
+  - Minimum 44x44px tüm tıklanabilir alanlar
+
+### 7.3 Tarayıcı Desteği
+
+- **Desktop:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- **Mobil:** iOS Safari 14+, Android Chrome 90+
+- **Responsive:** 320px (mobil) — 1920px (desktop)
+
+---
+
+## 8. Proje Yapısı
+
+```
+src/
+├── components/
+│   ├── ui/
+│   │   ├── Button.jsx
+│   │   ├── Input.jsx
+│   │   ├── Textarea.jsx
+│   │   ├── Select.jsx
+│   │   ├── Badge.jsx
+│   │   ├── Card.jsx
+│   │   ├── Modal.jsx
+│   │   └── Toast.jsx
+│   ├── RecipeCard.jsx
+│   ├── RecipeForm.jsx
+│   ├── IngredientList.jsx
+│   ├── IngredientInput.jsx
+│   ├── StepsList.jsx
+│   ├── SearchBar.jsx
+│   ├── CategoryFilter.jsx
+│   └── Layout/
+│       ├── Navbar.jsx
+│       └── Footer.jsx
+├── screens/
+│   ├── TariflerScreen.jsx      # Ana sayfa, tarif listesi
+│   ├── YeniTarifScreen.jsx    # Yeni tarif ekleme formu
+│   ├── TarifDetayScreen.jsx   # Tarif detay sayfası
+│   ├── TarifDuzenleScreen.jsx # Tarif düzenleme formu
+│   └── FavorilerScreen.jsx    # Favori tarifler
+├── context/
+│   ├── RecipeContext.jsx       # Tarifler state management
+│   └── ToastContext.jsx        # Toast notifications
+├── hooks/
+│   ├── useRecipes.js            # Tarif CRUD işlemleri
+│   ├── useFavorites.js          # Favori işlemleri
+│   └── useToast.js              # Toast hook
+├── utils/
+│   ├── storage.js               # localStorage helpers
+│   ├── constants.js             # Kategoriler, sabitler
+│   └── helpers.js               # UUID generator, date formatter
+├── App.jsx
+├── main.jsx
+└── index.css                    # Tailwind imports, custom styles
+```
+
+---
+
+## 9. Routing Yapısı
+
+```
+/                       → TariflerScreen (ana sayfa)
+/tarifler               → TariflerScreen
+/tarif/ekle             → YeniTarifScreen
+/tarif/:id              → TarifDetayScreen
+/tarif/:id/duzenle      → TarifDuzenleScreen
+/favoriler              → FavorilerScreen
+```
+
+---
+
+## 10. Window State (Testing & Dogfooding)
+
+```javascript
+window.app = {
+  state: 'idle' | 'loading' | 'error',
+  currentScreen: 'tarifler' | 'yeni-tarif' | 'tarif-detay' | 'tarif-duzenle' | 'favoriler',
+  recipes: Recipe[],
+  favorites: string[],
+  filters: {
+    category: string | null,
+    search: string
+  },
+  error: string | null
+}
+```
+
+---
+
+## 11. Ekranlar (Screens Table)
+
+| # | Ekran Adı | Tür | Açıklama |
+|---|-----------|-----|----------|
+| 1 | Tarifler (Ana Sayfa) | list | Tüm tariflerin kartlı listesi, arama, kategori filtresi |
+| 2 | Yeni Tarif Ekle | form | Malzeme ve adım ekleme formu, görsel yükleme |
+| 3 | Tarif Detay | detail | Tam tarif bilgisi, malzeme listesi, adımlar, favorile |
+| 4 | Tarif Düzenle | form | Mevcut tarifi güncelleme formu |
+| 5 | Favoriler | list | Sadece favorilenmiş tarifler |
+| 6 | Boş Durum — Tarif Yok | empty | Hiç tarif yokken gösterilen mesaj |
+| 7 | Boş Durum — Arama Sonuç Yok | empty | Arama/filtreleme sonucu bulunamadığında |
+| 8 | Boş Durum — Favori Yok | empty | Hiç favori tarif yokken gösterilen mesaj |
+| 9 | Silme Onay Dialogu | modal | Tarif silme öncesi onay |
+| 10 | Başarı/Hata Toast | notification | Kaydetme, silme sonrası geçici bildirim |
+
+**Toplam Ekran Sayısı:** 10
+
+---
+
+## 12. Akış Diyagramı
+
+```
+[Ana Sayfa / Tarifler]
+       ↓
+  [Tarif Kartı Tıkla]
+       ↓
+  [Tarif Detay]
+    ↓      ↓       ↓
+ [Düzenle] [Sil] [Favori]
+    ↓       ↓       ↓
+[Form]  [Onay Dialog] → [Toast: "Silindi"]
+    ↓                    ↓
+[Toast: "Kaydedildi"]  [Liste Güncellenir]
+    ↓
+[Detay'a Geri Dön]
+
+[+ Yeni Tarif Butonu]
+       ↓
+  [Yeni Tarif Formu]
+    ↓
+ [Kaydet / İptal]
+    ↓
+[Ana Sayfaya Dön]
+
+[Kalp İkonu → Favoriler Sayfası]
+       ↓
+  [Favoriler Listesi]
+```
+
+Generate a SEPARATE screen design for EVERY page, view, modal, dialog, tab panel, and settings screen described in this PRD. Do NOT skip ANY screen — even if it seems minor.
+
+MANDATORY SCREENS:
+- If the PRD mentions "settings" or "ayarlar" → generate a Settings screen
+- If the PRD mentions tabs or bottom navigation → generate EACH tab view as a separate screen
+- If the PRD mentions modals (statistics, help, share, confirmation) → generate each as a separate screen
+- If the PRD mentions error states, empty states, loading states → generate those too
+- Generate at least as many screens as there are distinct views/pages/modals in the PRD
+
+All visible text must be in Turkish. Use a dark, modern theme.

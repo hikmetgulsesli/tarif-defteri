@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#ffb689",
+                    "on-tertiary-fixed-variant": "#891b1a",
+                    "surface-container-highest": "#e8e1db",
+                    "on-tertiary-container": "#630006",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#faf2ec",
+                    "surface-variant": "#e8e1db",
+                    "surface-dim": "#e0d9d3",
+                    "on-surface": "#1e1b17",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#685d48",
+                    "on-primary-fixed-variant": "#743500",
+                    "surface-tint": "#984800",
+                    "secondary-fixed-dim": "#d4c5ab",
+                    "secondary-container": "#eedec3",
+                    "on-background": "#1e1b17",
+                    "tertiary-fixed-dim": "#ffb4ac",
+                    "outline": "#897366",
+                    "on-secondary-fixed-variant": "#504632",
+                    "on-error": "#ffffff",
+                    "surface": "#fff8f3",
+                    "tertiary-fixed": "#ffdad6",
+                    "inverse-primary": "#ffb689",
+                    "outline-variant": "#dcc1b3",
+                    "inverse-surface": "#33302c",
+                    "secondary-fixed": "#f0e1c6",
+                    "primary-container": "#e07a2f",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fff8f3",
+                    "tertiary": "#ab342f",
+                    "on-tertiary-fixed": "#410003",
+                    "background": "#fff8f3",
+                    "inverse-on-surface": "#f7efe9",
+                    "surface-container": "#f4ede6",
+                    "primary": "#984800",
+                    "on-secondary-container": "#6d614c",
+                    "surface-container-high": "#eee7e1",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#221b0a",
+                    "on-primary-container": "#4d2100",
+                    "on-surface-variant": "#554338",
+                    "on-primary-fixed": "#311300",
+                    "tertiary-container": "#f3695f",
+                    "primary-fixed": "#ffdbc8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 40px rgba(45, 42, 38, 0.06);
+        }
+        .signature-gradient {
+            background: linear-gradient(135deg, #984800 0%, #E07A2F 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen pb-24 md:pb-0">
+<header class="bg-[#fdfcfb] dark:bg-[#1E1B17] shadow-sm dark:shadow-none sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-bold text-[#984800] dark:text-[#E07A2F] font-['Noto_Serif']">Lezzet Defteri</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-[#5c554d] dark:text-[#c7b9a7] font-medium hover:text-[#984800] transition-colors duration-300" href="#">Kategoriler</a>
+<a class="text-[#984800] border-b-2 border-[#984800] pb-1 font-bold hover:text-[#984800] transition-colors duration-300" href="#">Favoriler</a>
+<a class="text-[#5c554d] dark:text-[#c7b9a7] font-medium hover:text-[#984800] transition-colors duration-300" href="#">Defterim</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-2 rounded-full border-none">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface" placeholder="Tarif ara..." type="text"/>
+</div>
+<button class="scale-95 active:opacity-80 transition-transform text-[#984800] dark:text-[#E07A2F]">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</button>
+</div>
+</div>
+<div class="bg-[#f5f0e6] dark:bg-[#2d2a26] h-[2px] w-full"></div>
+</header>
+<aside class="hidden lg:flex fixed left-0 top-20 h-[calc(100vh-80px)] w-64 bg-[#fdfcfb]/80 dark:bg-[#1E1B17]/80 backdrop-blur-xl rounded-r-2xl shadow-[0_20px_40px_rgba(45,42,38,0.06)] flex-col p-4 z-40">
+<div class="mb-8 px-4 py-2">
+<h2 class="font-['Noto_Serif'] italic text-xl text-[#984800]">Mutfak Günlüğüm</h2>
+<p class="text-xs text-on-surface-variant opacity-70">Hoş geldin, Şef</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 text-[#5c554d] px-4 py-3 hover:bg-[#f5f0e6]/50 hover:translate-x-1 transition-transform duration-200 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined">home</span> Ana Sayfa
+            </a>
+<a class="flex items-center gap-3 text-[#5c554d] px-4 py-3 hover:bg-[#f5f0e6]/50 hover:translate-x-1 transition-transform duration-200 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined">add_circle</span> Tarif Ekle
+            </a>
+<a class="flex items-center gap-3 bg-[#E07A2F]/10 text-[#984800] font-bold rounded-xl px-4 py-3 hover:translate-x-1 transition-transform duration-200 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined">favorite</span> Favoriler
+            </a>
+<a class="flex items-center gap-3 text-[#5c554d] px-4 py-3 hover:bg-[#f5f0e6]/50 hover:translate-x-1 transition-transform duration-200 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined">menu_book</span> Koleksiyonlar
+            </a>
+<a class="flex items-center gap-3 text-[#5c554d] px-4 py-3 hover:bg-[#f5f0e6]/50 hover:translate-x-1 transition-transform duration-200 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined">settings</span> Ayarlar
+            </a>
+</nav>
+<button class="mt-auto signature-gradient text-white rounded-xl py-3 px-4 font-bold text-sm shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+            Yeni Tarif Paylaş
+        </button>
+</aside>
+<main class="max-w-7xl mx-auto px-6 pt-12 pb-24 lg:pl-72">
+<div class="mb-12 relative">
+<h1 class="text-4xl md:text-5xl font-headline font-bold text-on-surface mb-2 relative z-10">Favori Tariflerim</h1>
+<p class="text-on-surface-variant font-label text-sm tracking-[0.2em] uppercase">Gönlünüzde taht kuran lezzetler</p>
+<div class="absolute -top-4 -left-4 w-24 h-24 bg-primary-container/10 rounded-full blur-3xl -z-10"></div>
+</div>
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+<div class="group relative bg-surface-container-low rounded-xl editorial-shadow overflow-hidden transition-all duration-300 hover:-translate-y-2">
+<div class="relative h-72 overflow-hidden">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-110" data-alt="artisanal sourdough pizza with fresh basil and buffalo mozzarella on a wooden peel in a sunlit kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCxtf7Bjx1QIrq9S3oq33X3uPrTK1PrJR1cnyvoFnI8WKRYt9ws_Op0ZGqkH1b-ejm5bmZ5YwHiyfNvNQ7_HmxxSf91tPymfzaBTQmrpgmknxWSPlU5gMLjlWzdOXPEdkYH76v6BLeNyT9GVL529fsaKEBriohZhZiVnb1BXiWOG5MybE49wIsxtrQFw92dn16mW7PbscIBGcn6D6VDiunayb_bUxpysYIbCaqrGQEWJ03ZyQdqyvA42nwNicX1XyePm2dr_k9u3OU"/>
+<div class="absolute top-4 right-4 z-10">
+<button class="bg-white/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+<span class="inline-block bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2">Ana Yemek</span>
+<h3 class="text-white font-headline text-2xl font-bold leading-tight">Taş Fırın Usulü Margherita</h3>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-4 text-on-surface-variant text-xs font-label tracking-wider uppercase">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 45 DK</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">restaurant</span> Orta</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed italic mb-6">"İtalyan klasiklerini kendi mutfağınızda canlandırın. Özel domates sosu ve taze mozzarella ile hazırlanan bu pizza, favorilerinizin başında gelecek."</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface shadow-sm" data-alt="portrait of a woman chef smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5_UYuRqRaP3GT_uzK-S4CAgrnlZx-Nu-BoDX56uOhnsD1dnQQ0goJyOdT4_NpvN5iafeRo_C_svb1SAz3um_S8mned0beQhhzT3mgvHVO0lmcfe8abYVn8AmJR53c4gFKNxFdptID8zcFJ4byZoeaqJIWukiQZHckpE98UFHiTY2_9GtuCSXItd2kJJP6bFEbl57_WY4cLuwgB4xatm76rm_rSr3noawLp8f_AGorl8QiqJz2Zwk0ZLELrIJZN8i3g5ms8vFQt09y"/>
+<span class="text-xs text-on-surface-variant font-medium ml-4 self-center">Şef Zeynep</span>
+</div>
+<button class="text-primary font-bold text-sm hover:underline underline-offset-4">Tarifi Gör</button>
+</div>
+</div>
+</div>
+<div class="group relative bg-surface-container-low rounded-xl editorial-shadow overflow-hidden transition-all duration-300 hover:-translate-y-2">
+<div class="relative h-72 overflow-hidden">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-110" data-alt="rich dark chocolate lava cake with a molten center being dusted with powdered sugar, moody atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHAxQjBPk6Icn2pKjha4VbXIbJLAlfgtwpp2IvCQ7iHxCq109DqlpzZJBxdWsxiGZ67DwOE8za6NJUKLfxJw0NMWXnghOJc-AEoNe8K-08NvSn5Fccfr6T_QWxIuDn25RIoFqM_LXRlvnsg_Z4LXKE5Y7oO3OS4thQ8MB0RhYFXQyggpNz9flVQyUqKicMyQ_re1HVe1zaBzsiBGrJutP1FhaiBaJ4m5e4QwbqrxkovLk8N_4tW6MlYwfv18Ftofhc6Geowy-N6UpF"/>
+<div class="absolute top-4 right-4 z-10">
+<button class="bg-white/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+<span class="inline-block bg-tertiary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2">Tatlı</span>
+<h3 class="text-white font-headline text-2xl font-bold leading-tight">Akışkan Volkan Keki</h3>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-4 text-on-surface-variant text-xs font-label tracking-wider uppercase">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 20 DK</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">restaurant</span> Kolay</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed italic mb-6">"Çikolata tutkunları için bir başyapıt. İçi sıcak ve akışkan, dışı ise hafif çıtır bu kek, akşam yemeği sonrası tatlı krizlerinizin tek çözümü."</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface shadow-sm" data-alt="portrait of a male chef in a kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2By9i70GTDzstyJPjLCkMNmXylqYmprpJcbxQEQ7j8j32MiL6Gld7vYkgi4KWCdr_RQsIMNIA3nUOjJ-FFU6dBjIVoRfvuVv5UN2vCQKS6wbmdxoEpaJlQvbPX3ZPF_Xof88_6VvlT94uFUzdONND-C1FA1xEpy-NN8efHGdCBp4AWC3x0OfYRrcpXU7M4g5rL2F6NeRZRc4clTY5W_hRDtHBDyVVURGdt260y1Z8RV_JZGOtzG5eFh55Npbx0XYORi1l8KJ-Uzaq"/>
+<span class="text-xs text-on-surface-variant font-medium ml-4 self-center">Şef Kerem</span>
+</div>
+<button class="text-primary font-bold text-sm hover:underline underline-offset-4">Tarifi Gör</button>
+</div>
+</div>
+</div>
+<div class="group relative bg-surface-container-low rounded-xl editorial-shadow overflow-hidden transition-all duration-300 hover:-translate-y-2">
+<div class="relative h-72 overflow-hidden">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-110" data-alt="vibrant garden salad with roasted chickpeas, avocado slices, and pomegranate seeds on a ceramic plate, bright natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSfU5XaPTHr8FbbZtFijZTeAIhc1TDn_Ysx8m-5K-JXTqD1yd4gEUaSVvg1XaW4sznyMaCocfh0WdOXiJQkho4atrMsa67BBeTEMJUwkYX0dHizsWMACJVxHseBtVwJlx4cvaueny-gJabFl9rYJFPiVbgn_cvAHgBblImPwS7ifHbUe2dzT7ug7Nkj7aHigG92oqdWGLLStCyw7y7GhQi6TNrLP1fsD7uXN6LanceboujL7qkSRvtjmbbryjnKt8rts_10y68nMa-"/>
+<div class="absolute top-4 right-4 z-10">
+<button class="bg-white/90 backdrop-blur text-primary p-2 rounded-full shadow-lg hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+<span class="inline-block bg-secondary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2">Salata</span>
+<h3 class="text-white font-headline text-2xl font-bold leading-tight">Çıtır Nohutlu Gökkuşağı</h3>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-4 text-on-surface-variant text-xs font-label tracking-wider uppercase">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 15 DK</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">restaurant</span> Çok Kolay</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed italic mb-6">"Hem sağlıklı hem de doyurucu bir öğün arayanlara. Fırınlanmış baharatlı nohutlar ve taze yeşilliklerin muhteşem uyumu."</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface shadow-sm" data-alt="portrait of a young woman chef" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf415aNx08wU3hQv4P7xKd_Jb0qQCYaG0gUbiC-KYLF26LmNKjQLy_QI0w_LnXvWH_Z0jKjfBRVkUUbt7RvxxRoQV6GOnV8DJYYD1ZexonoctRi8sX-XOj95HyD2lqNQ1Z2-2wMhYl5ujji9GqcZFUSXtuEqsBa3IXeM26g2abMK_69u9IDmcCx7wXo-MK3vYIIGueUMOkUwGdqp7UIIvdQ9QaigHMQ3CrAqF91igCumWMM0Yvn6QujgasMcab522HY7w31qTc86Hd"/>
+<span class="text-xs text-on-surface-variant font-medium ml-4 self-center">Şef Melis</span>
+</div>
+<button class="text-primary font-bold text-sm hover:underline underline-offset-4">Tarifi Gör</button>
+</div>
+</div>
+</div>
+</section>
+<div class="mt-16 bg-surface-container rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="text-2xl font-headline font-bold mb-4">Yeni favoriler keşfetmeye ne dersin?</h2>
+<p class="text-on-surface-variant mb-8 max-w-lg mx-auto leading-relaxed">Senin için hazırladığımız özel koleksiyonlara göz at ve mutfağına yeni heyecanlar kat.</p>
+<button class="signature-gradient text-white px-8 py-3 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition-all">
+                    Tüm Tarifleri Keşfet
+                </button>
+</div>
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary-container/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+</div>
+</main>
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#fdfcfb] dark:bg-[#1E1B17] shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-[#5c554d] p-2 hover:text-[#984800] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Keşfet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5c554d] p-2 hover:text-[#984800] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Ara</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#E07A2F] text-white rounded-full p-3 -mt-10 shadow-lg active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">add_box</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Ekle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#984800] p-2 hover:text-[#984800] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Favori</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5c554d] p-2 hover:text-[#984800] active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Profil</span>
+</a>
+</nav>
+</body></html>
