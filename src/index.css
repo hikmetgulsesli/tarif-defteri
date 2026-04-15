@@ -1,1 +1,70 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #984800;
+  --color-primary-container: #e07a2f;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #4d2100;
+  --color-surface: #fff8f3;
+  --color-surface-container: #f4ede6;
+  --color-surface-container-low: #faf2ec;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-high: #eee7e1;
+  --color-surface-container-highest: #e8e1db;
+  --color-surface-dim: #e0d9d3;
+  --color-surface-bright: #fff8f3;
+  --color-on-surface: #1e1b17;
+  --color-on-surface-variant: #554338;
+  --color-outline: #897366;
+  --color-outline-variant: #dcc1b3;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-secondary: #685d48;
+  --color-secondary-container: #eedec3;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #6d614c;
+  --color-tertiary: #ab342f;
+  --color-tertiary-container: #f3695f;
+  --color-on-tertiary: #ffffff;
+  --color-inverse-surface: #33302c;
+  --color-inverse-on-surface: #f7efe9;
+  --color-inverse-primary: #ffb689;
+  --color-background: #fff8f3;
+  --color-on-background: #1e1b17;
+  --font-headline: "Noto Serif", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+}
+
+.signature-gradient {
+  background: linear-gradient(135deg, #E07A2F 0%, #984800 100%);
+}
+
+.sun-gradient {
+  background: linear-gradient(135deg, #E07A2F 0%, #FFB74D 100%);
+}
+
+.editorial-shadow {
+  box-shadow: 0 4px 20px rgba(152, 72, 0, 0.1);
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
