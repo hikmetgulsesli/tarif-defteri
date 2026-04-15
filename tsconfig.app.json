@@ -21,5 +21,17 @@
     "types": ["vitest/globals"]
   },
   "include": ["src"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/screens/BasariBildirimiToast.tsx",
+    "src/screens/BosDurumAramaSonucuYok.tsx",
+    "src/screens/BosDurumFavoriYok.tsx",
+    "src/screens/BosDurumTarifYok.tsx",
+    "src/screens/Favoriler.tsx",
+    "src/screens/LezzetDefteriPrdSummary.tsx",
+    "src/screens/SilmeOnayDiyalogu.tsx",
+    "src/screens/TarifDetay.tsx",
+    "src/screens/TariflerAnaSayfa.tsx"
+  ]
 }

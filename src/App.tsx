@@ -1,12 +1,10 @@
 import { useState, useCallback } from "react";
-import { BrowserRouter, Routes, Route, useNavigate, useParams, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { YeniTarifEkle } from "./screens/YeniTarifEkle";
 import { TarifDuzenle } from "./screens/TarifDuzenle";
 import type { Tarif, Kategori } from "./types/tarif";
 import { useTarifler } from "./hooks/useTarifler";
 import "./index.css";
-
-type Sayfa = "tarifler" | "yeni" | "duzenle" | "favoriler" | "detay";
 
 function TariflerListesi({ tarifler, onYeni, onDuzenle, onFavoriToggle, onSil }: {
   tarifler: Tarif[];

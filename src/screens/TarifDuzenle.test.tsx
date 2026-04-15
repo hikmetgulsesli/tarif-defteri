@@ -55,8 +55,8 @@ describe("TarifDuzenle", () => {
 
   it("mevcut hazırlık ve pişirme sürelerini gösterir", () => {
     renderTarifDuzenle();
-    expect(screen.getByLabelText("Hazırlık süresi")).toHaveValue("45");
-    expect(screen.getByLabelText("Pişirme süresi")).toHaveValue("35");
+    expect(screen.getByLabelText("Hazırlık süresi")).toHaveValue(45);
+    expect(screen.getByLabelText("Pişirme süresi")).toHaveValue(35);
   });
 
   it("tarif adı güncellenebilir", async () => {
@@ -80,7 +80,6 @@ describe("TarifDuzenle", () => {
     const user = userEvent.setup();
     renderTarifDuzenle();
     await user.click(screen.getByLabelText("Yeni malzeme ekle"));
-    // Should now have 4 ingredients (3 original + 1 new)
     const miktarInputs = screen.getAllByLabelText(/Malzeme \d+ miktar/);
     expect(miktarInputs).toHaveLength(4);
   });
@@ -88,7 +87,6 @@ describe("TarifDuzenle", () => {
   it("malzeme silinebilir", async () => {
     const user = userEvent.setup();
     renderTarifDuzenle();
-    // Delete first ingredient - hover to make visible (testing-library doesn't need hover for aria)
     const deleteBtns = screen.getAllByLabelText(/Malzeme \d+ sil/);
     await user.click(deleteBtns[0]);
     const miktarInputs = screen.getAllByLabelText(/Malzeme \d+ miktar/);
@@ -99,17 +97,17 @@ describe("TarifDuzenle", () => {
     const user = userEvent.setup();
     renderTarifDuzenle();
     await user.click(screen.getByLabelText("Yeni adım ekle"));
-    const adimInputs = screen.getAllByLabelText(/Adım \d+/);
-    expect(adimInputs).toHaveLength(4);
+    const adimTextareas = screen.getAllByLabelText(/^Adım \d+$/);
+    expect(adimTextareas).toHaveLength(4);
   });
 
   it("adım silinebilir", async () => {
     const user = userEvent.setup();
     renderTarifDuzenle();
-    const deleteBtns = screen.getAllByLabelText(/Adım \d+ sil/);
+    const deleteBtns = screen.getAllByLabelText(/^Adım \d+ sil$/);
     await user.click(deleteBtns[0]);
-    const adimInputs = screen.getAllByLabelText(/Adım \d+/);
-    expect(adimInputs).toHaveLength(2);
+    const adimTextareas = screen.getAllByLabelText(/^Adım \d+$/);
+    expect(adimTextareas).toHaveLength(2);
   });
 
   it("boş isimle kaydetme hatası gösterir", async () => {

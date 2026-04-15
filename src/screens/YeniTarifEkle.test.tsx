@@ -37,14 +37,19 @@ describe("YeniTarifEkle", () => {
     expect(screen.getByText("İptal")).toBeInTheDocument();
   });
 
-  it("varsayılan 2 malzeme ve 2 adım satırı ile başlar", () => {
+  it("varsayılan 2 malzeme satırı ile başlar", () => {
     renderYeniTarifEkle();
     const miktarInputs = screen.getAllByLabelText(/Malzeme \d+ miktar/);
     const adInputs = screen.getAllByLabelText(/Malzeme \d+ adı/);
-    const adimInputs = screen.getAllByLabelText(/Adım \d+/);
     expect(miktarInputs).toHaveLength(2);
     expect(adInputs).toHaveLength(2);
-    expect(adimInputs).toHaveLength(2);
+  });
+
+  it("varsayılan 2 adım alanı ile başlar", () => {
+    renderYeniTarifEkle();
+    // Only textareas with aria-label matching "Adım X" (not "Adım X sil")
+    const adimTextareas = screen.getAllByLabelText(/^Adım \d+$/);
+    expect(adimTextareas).toHaveLength(2);
   });
 
   it("tarif adı girilebilir", async () => {
@@ -68,7 +73,8 @@ describe("YeniTarifEkle", () => {
     renderYeniTarifEkle();
     const input = screen.getByLabelText("Hazırlık süresi");
     await user.type(input, "30");
-    expect(input).toHaveValue("30");
+    // Number input returns numeric value
+    expect(input).toHaveValue(30);
   });
 
   it("yeni malzeme satırı eklenebilir", async () => {
@@ -97,18 +103,18 @@ describe("YeniTarifEkle", () => {
     renderYeniTarifEkle();
     const ekleBtn = screen.getByLabelText("Yeni adım ekle");
     await user.click(ekleBtn);
-    const adimInputs = screen.getAllByLabelText(/Adım \d+/);
-    expect(adimInputs).toHaveLength(3);
+    const adimTextareas = screen.getAllByLabelText(/^Adım \d+$/);
+    expect(adimTextareas).toHaveLength(3);
   });
 
   it("adım silinebilir (en az 1 kalır)", async () => {
     const user = userEvent.setup();
     renderYeniTarifEkle();
     await user.click(screen.getByLabelText("Yeni adım ekle"));
-    expect(screen.getAllByLabelText(/Adım \d+/)).toHaveLength(3);
-    const deleteBtns = screen.getAllByLabelText(/Adım \d+ sil/);
+    expect(screen.getAllByLabelText(/^Adım \d+$/)).toHaveLength(3);
+    const deleteBtns = screen.getAllByLabelText(/^Adım \d+ sil$/);
     await user.click(deleteBtns[0]);
-    expect(screen.getAllByLabelText(/Adım \d+/)).toHaveLength(2);
+    expect(screen.getAllByLabelText(/^Adım \d+$/)).toHaveLength(2);
   });
 
   it("boş form gönderilirse hata gösterir", async () => {
@@ -146,8 +152,8 @@ describe("YeniTarifEkle", () => {
     await user.type(adInputs[0], "Kırmızı mercimek");
 
     // Fill first step
-    const adimInputs = screen.getAllByLabelText(/Adım \d+/);
-    await user.type(adimInputs[0], "Mercimekleri yıkayıp tencereye alın.");
+    const adimTextareas = screen.getAllByLabelText(/^Adım \d+$/);
+    await user.type(adimTextareas[0], "Mercimekleri yıkayıp tencereye alın.");
 
     await user.click(screen.getByText("Tarifi Kaydet"));
 
@@ -170,7 +176,6 @@ describe("YeniTarifEkle", () => {
     const user = userEvent.setup();
     const onIptal = vi.fn();
     renderYeniTarifEkle(vi.fn(), onIptal);
-    // There are multiple İptal buttons - find the form one
     const iptalButtons = screen.getAllByText("İptal");
     await user.click(iptalButtons[0]);
     expect(onIptal).toHaveBeenCalled();
